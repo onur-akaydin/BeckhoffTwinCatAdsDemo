@@ -57,7 +57,7 @@ Here is an example of what the `settings.json` file will look like:
 
 ```json
 {
-  "NetId": "192.168.1.1.1.1",
+  "NetId": "192.168.1.5.1.1",
   "Port": 851,
   "IntValueAddress": "MAIN.nInteger",
   "DoubleValueAddress": "MAIN.fReal",
