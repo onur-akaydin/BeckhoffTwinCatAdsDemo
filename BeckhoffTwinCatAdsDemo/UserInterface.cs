@@ -1,6 +1,7 @@
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace BeckhoffTwinCatAdsDemo
 {
@@ -185,9 +186,22 @@ namespace BeckhoffTwinCatAdsDemo
         private void PrintFilteredException(Exception ex)
         {
             var exceptionText = ex.ToString();
-            var solutionPath = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin\\Debug\\", "");
-            solutionPath = solutionPath.Replace("\\bin\\Release\\", "");
-            exceptionText = exceptionText.Replace(solutionPath, string.Empty);
+            var solutionName = typeof(Program).Namespace;
+            var regex = new Regex($@".*?(?={solutionName})");
+            var lines = exceptionText.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var line = lines[i];
+                var index = line.IndexOf(" in ");
+                if (index > 0)
+                {
+                    var prefix = line.Substring(0, index + 4);
+                    var pathPart = line.Substring(index + 4);
+                    pathPart = regex.Replace(pathPart, string.Empty, 1);
+                    lines[i] = prefix + pathPart;
+                }
+            }
+            exceptionText = string.Join(Environment.NewLine, lines);
             AnsiConsole.WriteLine(exceptionText);
         }
 
