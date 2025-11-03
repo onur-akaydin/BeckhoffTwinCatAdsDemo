@@ -186,6 +186,7 @@ namespace BeckhoffTwinCatAdsDemo
         {
             var exceptionText = ex.ToString();
             var solutionPath = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin\\Debug\\", "");
+            solutionPath = solutionPath.Replace("\\bin\\Release\\", "");
             exceptionText = exceptionText.Replace(solutionPath, string.Empty);
             AnsiConsole.WriteLine(exceptionText);
         }
