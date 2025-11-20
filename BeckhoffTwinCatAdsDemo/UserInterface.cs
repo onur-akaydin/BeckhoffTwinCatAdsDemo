@@ -78,7 +78,7 @@ namespace BeckhoffTwinCatAdsDemo
 
                     try
                     {
-                        results.Add(new Tuple<string, string>("String", plcService.ReadString()));
+                        results.Add(new Tuple<string, string>("String", plcService.ReadString(80)));
                     }
                     catch (Exception ex)
                     {

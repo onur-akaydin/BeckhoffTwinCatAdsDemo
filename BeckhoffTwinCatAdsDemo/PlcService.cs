@@ -48,7 +48,7 @@ namespace BeckhoffTwinCatAdsDemo
         {
             try
             {
-                return (int)_client.ReadAny(_intValueHandle, typeof(int));
+                return _client.ReadAny<int>(_intValueHandle);
             }
             catch (Exception ex)
             {
@@ -60,7 +60,7 @@ namespace BeckhoffTwinCatAdsDemo
         {
             try
             {
-                return (double)_client.ReadAny(_doubleValueHandle, typeof(double));
+                return _client.ReadAny<double>(_doubleValueHandle);
             }
             catch (Exception ex)
             {
@@ -68,11 +68,11 @@ namespace BeckhoffTwinCatAdsDemo
             }
         }
 
-        public string ReadString()
+        public string ReadString(int length)
         {
             try
             {
-                return (string)_client.ReadAny(_stringValueHandle, typeof(string), new int[] { 81 });
+                return _client.ReadAnyString(_stringValueHandle, length, null);
             }
             catch (Exception ex)
             {
@@ -84,7 +84,7 @@ namespace BeckhoffTwinCatAdsDemo
         {
             try
             {
-                return (bool)_client.ReadAny(_boolValueHandle, typeof(bool));
+                return _client.ReadAny<bool>(_boolValueHandle);
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace BeckhoffTwinCatAdsDemo
         {
             try
             {
-                _client.WriteAny(_intValueHandle, value);
+                _client.WriteAny(_intValueHandle, value, new int[] { 4 });
             }
             catch (Exception ex)
             {
@@ -108,7 +108,7 @@ namespace BeckhoffTwinCatAdsDemo
         {
             try
             {
-                _client.WriteAny(_doubleValueHandle, value);
+                _client.WriteAny(_doubleValueHandle, value, new int[] { 8 });
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace BeckhoffTwinCatAdsDemo
         {
             try
             {
-                _client.WriteAny(_stringValueHandle, value, new int[] { 81 });
+                _client.WriteAnyString(_stringValueHandle, value, value.Length, null);
             }
             catch (Exception ex)
             {
